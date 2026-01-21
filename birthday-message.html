@@ -1,0 +1,1188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Birthday Message ❤️</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #ff7eb3;
+        --secondary: #7d5fff;
+        --accent: #5ce1e6;
+        --light: #fff9fb;
+        --dark: #2c2c54;
+        --gold: #ffd166;
+        --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        --gradient: linear-gradient(
+          135deg,
+          #ff7eb3 0%,
+          #7d5fff 50%,
+          #5ce1e6 100%
+        );
+      }
+
+      body {
+        font-family: "Playfair Display", serif;
+        background: var(--light);
+        color: var(--dark);
+        overflow-x: hidden;
+        min-height: 100vh;
+        background-image:
+          radial-gradient(
+            circle at 10% 20%,
+            rgba(255, 126, 179, 0.05) 0%,
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(93, 225, 230, 0.05) 0%,
+            transparent 20%
+          );
+      }
+
+      /* Back Button */
+      .back-btn-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+      }
+
+      .back-btn {
+        background: var(--gradient);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 5px 15px rgba(125, 95, 255, 0.3);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .back-btn:hover {
+        transform: translateX(-5px);
+        box-shadow: 0 8px 20px rgba(125, 95, 255, 0.4);
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 80px 15px 40px;
+      }
+
+      /* Birthday Message Page */
+      .birthday-header {
+        text-align: center;
+        padding: 30px 15px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .birthday-title {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(2.5rem, 7vw, 4rem);
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+        line-height: 1.2;
+      }
+
+      .birthday-subtitle {
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        color: var(--dark);
+        opacity: 0.8;
+        font-style: italic;
+        line-height: 1.5;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      .birthday-message-container {
+        background: white;
+        border-radius: 25px;
+        padding: 30px;
+        margin: 30px 0;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+        border: 2px solid rgba(255, 126, 179, 0.2);
+      }
+
+      .birthday-message-container:before {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: var(--gradient);
+        border-radius: 50%;
+        top: -75px;
+        right: -75px;
+        opacity: 0.05;
+      }
+
+      .birthday-message {
+        font-size: clamp(1.1rem, 3vw, 1.4rem);
+        line-height: 1.6;
+        text-align: left;
+        position: relative;
+        z-index: 2;
+      }
+
+      .message-line {
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .message-line.visible {
+        animation: fadeInUp 0.8s forwards;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .special-highlight {
+        color: var(--secondary);
+        font-weight: bold;
+      }
+
+      .gold-text {
+        color: var(--gold);
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(1.2rem, 3vw, 1.5rem);
+        display: block;
+        margin: 20px 0;
+        text-align: center;
+        font-style: italic;
+      }
+
+      .message-ending {
+        text-align: center;
+        margin-top: 40px;
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(2rem, 5vw, 2.5rem);
+        color: var(--primary);
+        line-height: 1.3;
+      }
+
+      /* Name Typing Animation */
+      .name-container {
+        position: relative;
+        display: inline-block;
+        margin: 0 5px;
+      }
+
+      .typing-name {
+        color: var(--primary);
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(1.3rem, 3vw, 1.6rem);
+        font-weight: bold;
+        border-right: 2px solid var(--primary);
+        padding-right: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .typing-cursor {
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* Memory Cards */
+      .memory-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin: 40px 0;
+      }
+
+      .memory-card {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 126, 179, 0.1) 0%,
+          rgba(125, 95, 255, 0.1) 100%
+        );
+        border-radius: 20px;
+        padding: 25px;
+        border: 1px solid rgba(255, 126, 179, 0.2);
+        transition: all 0.4s ease;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .memory-card.visible {
+        animation: fadeInUp 0.8s forwards;
+      }
+
+      .memory-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-icon {
+        font-size: 2.2rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .card-title {
+        font-size: 1.3rem;
+        color: var(--secondary);
+        margin-bottom: 12px;
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      .card-text {
+        color: #555;
+        line-height: 1.5;
+        font-size: 1rem;
+      }
+
+      /* Special Wishes Section */
+      .special-wishes {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 126, 179, 0.1) 0%,
+          rgba(125, 95, 255, 0.1) 100%
+        );
+        border-radius: 25px;
+        padding: 30px;
+        margin: 40px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 126, 179, 0.2);
+      }
+
+      .wishes-title {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(2.2rem, 5vw, 3rem);
+        color: var(--secondary);
+        margin-bottom: 25px;
+        line-height: 1.2;
+      }
+
+      .wish-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 25px;
+      }
+
+      .wish-item {
+        background: white;
+        padding: 15px 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border-left: 5px solid var(--primary);
+        flex: 1;
+        min-width: 250px;
+        max-width: 350px;
+      }
+
+      .wish-item:hover {
+        transform: translateY(-5px);
+        border-left-color: var(--accent);
+      }
+
+      /* Birthday Celebration */
+      .birthday-celebration {
+        text-align: center;
+        margin: 40px 0;
+      }
+
+      .celebration-title {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(2.2rem, 5vw, 3rem);
+        color: var(--secondary);
+        margin-bottom: 30px;
+        line-height: 1.2;
+      }
+
+      .celebration-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .celebration-item {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        flex: 1;
+        min-width: 200px;
+        max-width: 250px;
+        box-shadow: var(--shadow);
+        transition: all 0.4s ease;
+      }
+
+      .celebration-item:hover {
+        transform: translateY(-8px);
+      }
+
+      .celebration-emoji {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+
+      .celebration-item h3 {
+        font-size: 1.3rem;
+        color: var(--secondary);
+        margin-bottom: 10px;
+      }
+
+      .celebration-item p {
+        color: #555;
+        line-height: 1.5;
+        font-size: 0.95rem;
+      }
+
+      /* Floating Elements */
+      .floating-element {
+        position: absolute;
+        font-size: 1.2rem;
+        opacity: 0.7;
+        z-index: -1;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(5deg);
+        }
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 25px;
+        color: #777;
+        font-size: 1rem;
+        position: relative;
+      }
+
+      .footer:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--primary),
+          transparent
+        );
+      }
+
+      .heartbeat {
+        color: var(--primary);
+        animation: heartbeat 1.5s infinite;
+        display: inline-block;
+      }
+
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      /* Birthday Lock Screen */
+      .birthday-lock-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(44, 44, 84, 0.95);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .lock-screen-content {
+        max-width: 500px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 126, 179, 0.3);
+      }
+
+      .lock-screen-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #ff7eb3;
+        animation: lockPulse 2s infinite;
+      }
+
+      @keyframes lockPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      .lock-screen-title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: white;
+      }
+
+      .lock-screen-message {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+        opacity: 0.9;
+        line-height: 1.5;
+      }
+
+      .countdown-container {
+        margin: 30px 0;
+      }
+
+      .countdown-title {
+        font-size: 1rem;
+        margin-bottom: 15px;
+        opacity: 0.8;
+      }
+
+      .countdown-timer {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ff7eb3;
+        margin-bottom: 20px;
+      }
+
+      .back-to-main-btn {
+        background: var(--gradient);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .back-to-main-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 70px 15px 30px;
+        }
+
+        .birthday-header {
+          padding: 25px 15px;
+        }
+
+        .birthday-message-container {
+          padding: 25px 20px;
+          margin: 25px 0;
+        }
+
+        .memory-cards {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .memory-card {
+          padding: 20px;
+        }
+
+        .special-wishes {
+          padding: 25px 20px;
+          margin: 30px 0;
+        }
+
+        .wish-item {
+          min-width: 100%;
+          padding: 15px;
+        }
+
+        .celebration-container {
+          gap: 15px;
+        }
+
+        .celebration-item {
+          min-width: 100%;
+          max-width: 100%;
+          padding: 20px;
+        }
+
+        .back-btn-container {
+          top: 15px;
+          left: 15px;
+        }
+
+        .back-btn {
+          padding: 10px 15px;
+          font-size: 0.85rem;
+        }
+
+        .lock-screen-content {
+          padding: 30px 20px;
+        }
+
+        .lock-screen-icon {
+          font-size: 3rem;
+        }
+
+        .lock-screen-title {
+          font-size: 1.5rem;
+        }
+
+        .countdown-timer {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .birthday-title {
+          font-size: 2.2rem;
+        }
+
+        .birthday-subtitle {
+          font-size: 0.95rem;
+        }
+
+        .birthday-message {
+          font-size: 1.1rem;
+        }
+
+        .message-ending {
+          font-size: 1.8rem;
+        }
+
+        .wishes-title {
+          font-size: 2rem;
+        }
+
+        .celebration-title {
+          font-size: 2rem;
+        }
+
+        .typing-name {
+          font-size: 1.2rem;
+        }
+
+        .memory-cards {
+          gap: 15px;
+        }
+
+        .memory-card {
+          padding: 18px;
+        }
+
+        .card-icon {
+          font-size: 1.8rem;
+        }
+
+        .card-title {
+          font-size: 1.2rem;
+        }
+
+        .card-text {
+          font-size: 0.95rem;
+        }
+
+        .celebration-item {
+          padding: 18px;
+        }
+
+        .celebration-emoji {
+          font-size: 2rem;
+        }
+
+        .floating-element {
+          font-size: 1rem;
+        }
+
+        .lock-screen-content {
+          padding: 20px 15px;
+        }
+
+        .lock-screen-title {
+          font-size: 1.3rem;
+        }
+
+        .lock-screen-message {
+          font-size: 0.95rem;
+        }
+
+        .countdown-timer {
+          font-size: 1.8rem;
+        }
+
+        .back-to-main-btn {
+          padding: 12px 25px;
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .birthday-title {
+          font-size: 2rem;
+        }
+
+        .container {
+          padding: 60px 10px 25px;
+        }
+
+        .back-btn {
+          padding: 8px 12px;
+          font-size: 0.8rem;
+        }
+
+        .birthday-message-container {
+          padding: 20px 15px;
+        }
+
+        .special-wishes {
+          padding: 20px 15px;
+        }
+
+        .celebration-item {
+          padding: 15px;
+        }
+      }
+
+      /* Touch Device Optimizations */
+      @media (hover: none) and (pointer: coarse) {
+        .memory-card:hover,
+        .wish-item:hover,
+        .celebration-item:hover {
+          transform: none;
+        }
+
+        .memory-card:active,
+        .wish-item:active {
+          transform: scale(0.98);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Birthday Lock Screen (Will be shown if not Jan 24) -->
+    <div class="birthday-lock-screen" id="birthdayLockScreen">
+      <div class="lock-screen-content">
+        <div class="lock-screen-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <h1 class="lock-screen-title">This Message is Locked! 🔒</h1>
+        <p class="lock-screen-message">
+          This special birthday message is only available on January 24th.
+          <br /><br />
+          Come back on Shristy's birthday to read this heartfelt message!
+        </p>
+
+        <div class="countdown-container">
+          <div class="countdown-title">Time until January 24th:</div>
+          <div class="countdown-timer" id="countdownTimer">Loading...</div>
+        </div>
+
+        <a href="index.html" class="back-to-main-btn">
+          <i class="fas fa-arrow-left"></i> Back to Main Page
+        </a>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-btn-container">
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Memories
+      </a>
+    </div>
+
+    <!-- Floating Elements -->
+    <div
+      class="floating-element"
+      style="top: 15%; left: 5%; animation-delay: 0s"
+    >
+      🎈
+    </div>
+    <div
+      class="floating-element"
+      style="top: 20%; right: 8%; animation-delay: 1s"
+    >
+      🎂
+    </div>
+    <div
+      class="floating-element"
+      style="bottom: 30%; left: 10%; animation-delay: 2s"
+    >
+      🎁
+    </div>
+    <div
+      class="floating-element"
+      style="bottom: 20%; right: 15%; animation-delay: 3s"
+    >
+      ✨
+    </div>
+
+    <div class="container" id="mainContent">
+      <!-- Birthday Header -->
+      <header class="birthday-header">
+        <h1 class="birthday-title">Happy Birthday Shristy! 🎉</h1>
+        <p class="birthday-subtitle">
+          No long speeches — just honest words shaped by shared moments
+        </p>
+      </header>
+
+      <!-- Main Birthday Message -->
+      <section class="birthday-message-container">
+        <div class="birthday-message">
+          <div class="message-line">Ooi Shristy,</div>
+
+          <div class="message-line">
+            Happy Birthday! 🎂 Today is
+            <span class="special-highlight">your day</span> - and I just wanted
+            to say how much I've genuinely enjoyed every random, funny, and real
+            conversation we've had.
+          </div>
+
+          <div class="message-line">
+            From our first "Ooi" messages to discussing vampire immortality,
+            from school drama to deep life talks - every chat has been special.
+            Remember when you asked how to stop periods naturally? Or when we
+            debated if stomach size really matches your fist?
+          </div>
+
+          <div class="message-line">
+            You've been there through toothaches, school stress, random gussa
+            moments, and even when I needed to talk about Diya. And you always
+            listened - whether it was advice or just being there.
+          </div>
+
+          <span class="gold-text">
+            "Some connections don't need constant effort — they just feel
+            natural, quietly present when it matters."
+          </span>
+
+          <div class="message-line">
+            To my friend who makes even ordinary moments memorable,
+            <span class="name-container"
+              ><span class="typing-name" id="friendName"></span
+            ></span>
+            — thank you for being you. As you blow out your candles today,
+            here's what I genuinely wish for you:
+          </div>
+        </div>
+      </section>
+
+      <!-- Special Wishes -->
+      <section class="special-wishes">
+        <h2 class="wishes-title">A Few Real Wishes, Just for You</h2>
+        <div class="wish-list">
+          <div class="wish-item">
+            Less toothaches and more chocolate moments 🍫
+          </div>
+
+          <div class="wish-item">That "Ameer wala pati" you joked about 😉</div>
+
+          <div class="wish-item">
+            Parents who understand without constant "phadhati nhi hai"
+          </div>
+
+          <div class="wish-item">
+            Friends who appreciate your realness like I do
+          </div>
+
+          <div class="wish-item">
+            And yes — maybe those extra centimeters in height you wanted! 😄
+          </div>
+
+          <div class="wish-item">
+            Confidence to wear that one-piece without overthinking it 👗
+          </div>
+
+          <div class="wish-item">
+            More "mauja hi mauja" days than stressful ones
+          </div>
+
+          <div class="wish-item">
+            That guitar-playing friend who actually lets you touch their
+            instrument 🎸
+          </div>
+        </div>
+      </section>
+
+      <!-- Memory Cards -->
+      <section class="memory-cards">
+        <div class="memory-card">
+          <div class="card-icon"><i class="fas fa-star"></i></div>
+          <h3 class="card-title">What I've Always Admired</h3>
+          <p class="card-text">
+            Your honesty - even when asking uncomfortable questions. Your humor
+            that turns stress into laughter. The way you care without making it
+            a big deal. It's rare and it's real.
+          </p>
+        </div>
+
+        <div class="memory-card">
+          <div class="card-icon"><i class="fas fa-gem"></i></div>
+          <h3 class="card-title">Your Special Superpower</h3>
+          <p class="card-text">
+            Making people feel comfortable being themselves. Whether it's about
+            pimples, periods, or personal problems - you create a space where
+            people can be real without judgment.
+          </p>
+        </div>
+
+        <div class="memory-card">
+          <div class="card-icon"><i class="fas fa-heart"></i></div>
+          <h3 class="card-title">One Promise From Me</h3>
+          <p class="card-text">
+            No matter where life takes us, there will always be a "Bolo" waiting
+            for your "Ooi". Some bonds don't fade with time - they just become
+            comfortable constants.
+          </p>
+        </div>
+      </section>
+
+      <!-- Birthday Celebration -->
+      <section class="birthday-celebration">
+        <h2 class="celebration-title">Today, Just Be You</h2>
+        <div class="celebration-container">
+          <div class="celebration-item">
+            <div class="celebration-emoji">🎂</div>
+            <h3>Make a Wish!</h3>
+            <p>Wish for something you genuinely want - no filters needed</p>
+          </div>
+
+          <div class="celebration-item">
+            <div class="celebration-emoji">✨</div>
+            <h3>Feel Special</h3>
+            <p>Today, remember you're someone people genuinely care about</p>
+          </div>
+
+          <div class="celebration-item">
+            <div class="celebration-emoji">❤️</div>
+            <h3>Just Be Happy</h3>
+            <p>Eat the cake, wear what you love, enjoy your day fully</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final Message -->
+      <section class="birthday-message-container">
+        <div class="birthday-message">
+          <div class="message-line">
+            So here's to you, Shristy - to more random conversations, more
+            inside jokes, more real moments. May this year bring you everything
+            you genuinely want, at your own pace, in your own way.
+          </div>
+
+          <div class="message-line">
+            Thank you for every "Ooi", every laugh, every moment of
+            understanding. Our friendship, built slowly through understanding
+            and time, means more than you probably realize.
+          </div>
+
+          <div
+            class="message-line"
+            style="text-align: center; margin-top: 40px"
+          >
+            <span class="special-highlight" style="font-size: 1.6rem"
+              >Happy Birthday once again,
+              <span id="friendNameEnd"></span>!</span
+            >
+          </div>
+
+          <div class="message-ending">
+            Always here for your "Ooi" moments<br />
+            - Keshab ❤️
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <p>
+          Made with <span class="heartbeat">❤️</span> honestly and thoughtfully
+        </p>
+        <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7">
+          January 24th — celebrating someone who makes ordinary moments special
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Check if it's the birthday
+      const today = new Date();
+      const isBirthday = today.getDate() === 24 && today.getMonth() === 0;
+
+      if (!isBirthday) {
+        // Show lock screen and hide main content
+        document.getElementById("birthdayLockScreen").style.display = "flex";
+        document.getElementById("mainContent").style.display = "none";
+        document.querySelector(".back-btn-container").style.display = "none";
+        document
+          .querySelectorAll(".floating-element")
+          .forEach((el) => (el.style.display = "none"));
+
+        // Set up countdown timer
+        function updateCountdown() {
+          const now = new Date();
+          const currentYear = now.getFullYear();
+
+          // Create birthday date for this year
+          const birthdayThisYear = new Date(currentYear, 0, 24); // January 24th
+
+          // If birthday has passed this year, set for next year
+          let nextBirthday = birthdayThisYear;
+          if (now > birthdayThisYear) {
+            nextBirthday = new Date(currentYear + 1, 0, 24);
+          }
+
+          // Calculate time difference
+          const timeDiff = nextBirthday - now;
+
+          const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          );
+          const minutes = Math.floor(
+            (timeDiff % (1000 * 60 * 60)) / (1000 * 60),
+          );
+          const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+          document.getElementById("countdownTimer").textContent =
+            `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+          // Update every second
+          setTimeout(updateCountdown, 1000);
+        }
+
+        // Start countdown
+        updateCountdown();
+
+        // Stop script execution for locked state
+        throw new Error("Birthday message locked until January 24th");
+      }
+
+      // If it IS the birthday, continue with normal page functionality
+
+      // Her name
+      const friendName = "Shristy";
+      const nameElement = document.getElementById("friendName");
+      const nameEndElement = document.getElementById("friendNameEnd");
+
+      // Set her name at the end too
+      nameEndElement.textContent = friendName;
+
+      // Typewriter effect for her name
+      function typeWriterName() {
+        let i = 0;
+        const speed = 100;
+
+        function typeLetter() {
+          if (i < friendName.length) {
+            nameElement.innerHTML =
+              friendName.substring(0, i + 1) +
+              '<span class="typing-cursor">|</span>';
+            i++;
+            setTimeout(typeLetter, speed);
+          } else {
+            nameElement.innerHTML = friendName;
+            nameElement.style.animation = "heartbeat 1.5s infinite";
+          }
+        }
+
+        setTimeout(typeLetter, 500);
+      }
+
+      // Animate message lines
+      function startMessageReveal() {
+        const messageLines = document.querySelectorAll(".message-line");
+        const memoryCards = document.querySelectorAll(".memory-card");
+
+        typeWriterName();
+
+        messageLines.forEach((line, index) => {
+          setTimeout(
+            () => {
+              line.classList.add("visible");
+            },
+            index * 400 + 500,
+          );
+        });
+
+        setTimeout(() => {
+          memoryCards.forEach((card, index) => {
+            setTimeout(
+              () => {
+                card.classList.add("visible");
+              },
+              index * 300 + 1000,
+            );
+          });
+        }, 2000);
+
+        createFloatingBalloons();
+      }
+
+      // Create floating balloons
+      function createFloatingBalloons() {
+        const balloonEmojis = [
+          "🎈",
+          "🎈",
+          "🎈",
+          "🎈",
+          "🎈",
+          "🎈",
+          "🎈",
+          "🎈",
+          "🎈",
+        ];
+
+        balloonEmojis.forEach((emoji, index) => {
+          setTimeout(() => {
+            const balloon = document.createElement("div");
+            balloon.className = "floating-element";
+            balloon.textContent = emoji;
+            balloon.style.left = `${Math.random() * 90 + 5}%`;
+            balloon.style.bottom = "-50px";
+            balloon.style.fontSize = `${Math.random() * 2 + 2}rem`;
+            balloon.style.animationDuration = `${Math.random() * 3 + 8}s`;
+            balloon.style.animationDelay = `${Math.random() * 2}s`;
+
+            document.body.appendChild(balloon);
+
+            setTimeout(() => {
+              balloon.remove();
+            }, 10000);
+          }, index * 300);
+        });
+      }
+
+      // Add interactive effects
+      document.querySelectorAll(".celebration-item").forEach((item) => {
+        item.addEventListener("mouseenter", function () {
+          const emoji = this.querySelector(".celebration-emoji");
+          emoji.style.transform = "scale(1.3)";
+          emoji.style.transition = "transform 0.3s ease";
+        });
+
+        item.addEventListener("mouseleave", function () {
+          const emoji = this.querySelector(".celebration-emoji");
+          emoji.style.transform = "scale(1)";
+        });
+      });
+
+      // Check if it's her birthday
+      const isBirthdayToday = today.getDate() === 24 && today.getMonth() === 0;
+
+      if (isBirthdayToday) {
+        setTimeout(() => {
+          const celebration = document.createElement("div");
+          celebration.style.position = "fixed";
+          celebration.style.top = "0";
+          celebration.style.left = "0";
+          celebration.style.width = "100%";
+          celebration.style.height = "100%";
+          celebration.style.background =
+            "radial-gradient(circle, transparent 20%, rgba(255, 126, 179, 0.3) 40%, rgba(125, 95, 255, 0.2) 60%, transparent 70%)";
+          celebration.style.zIndex = "9998";
+          celebration.style.pointerEvents = "none";
+          celebration.style.animation = "pulse 2s ease-out";
+
+          document.body.appendChild(celebration);
+
+          setTimeout(() => {
+            celebration.remove();
+          }, 2000);
+        }, 3000);
+      }
+
+      // Scroll animation for memory cards
+      window.addEventListener("scroll", () => {
+        const cards = document.querySelectorAll(".memory-card:not(.visible)");
+        const windowHeight = window.innerHeight;
+
+        cards.forEach((card) => {
+          const cardTop = card.getBoundingClientRect().top;
+
+          if (cardTop < windowHeight - 100) {
+            card.classList.add("visible");
+          }
+        });
+      });
+
+      // Start animations immediately when page loads
+      window.addEventListener("DOMContentLoaded", () => {
+        startMessageReveal();
+      });
+    </script>
+  </body>
+</html>
