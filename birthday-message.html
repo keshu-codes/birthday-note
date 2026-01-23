@@ -10,12 +10,11 @@
     />
 
     <link
-  rel="icon"
-  type="image/svg+xml"
-  href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ff7eb3'><animate attributeName='r' values='38;44;38' dur='1.5s' repeatCount='indefinite'/><animate attributeName='opacity' values='1;0.8;1' dur='1.5s' repeatCount='indefinite'/></circle><text x='50%' y='68%' text-anchor='middle' font-size='60' font-family='Arial' fill='white'>S</text></svg>"
->
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ff7eb3'><animate attributeName='r' values='38;44;38' dur='1.5s' repeatCount='indefinite'/><animate attributeName='opacity' values='1;0.8;1' dur='1.5s' repeatCount='indefinite'/></circle><text x='50%' y='68%' text-anchor='middle' font-size='60' font-family='Arial' fill='white'>S</text></svg>"
+    />
 
-    
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap"
       rel="stylesheet"
@@ -742,7 +741,6 @@
     </style>
   </head>
   <body>
-    <!-- Birthday Lock Screen (Will be shown if not Jan 24) -->
     <div class="birthday-lock-screen" id="birthdayLockScreen">
       <div class="lock-screen-content">
         <div class="lock-screen-icon">
@@ -766,14 +764,12 @@
       </div>
     </div>
 
-    <!-- Back Button -->
     <div class="back-btn-container">
       <a href="index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i> Back to Memories
       </a>
     </div>
 
-    <!-- Floating Elements -->
     <div
       class="floating-element"
       style="top: 15%; left: 5%; animation-delay: 0s"
@@ -800,7 +796,6 @@
     </div>
 
     <div class="container" id="mainContent">
-      <!-- Birthday Header -->
       <header class="birthday-header">
         <h1 class="birthday-title">Happy Birthday Shristy! 🎉</h1>
         <p class="birthday-subtitle">
@@ -808,7 +803,6 @@
         </p>
       </header>
 
-      <!-- Main Birthday Message -->
       <section class="birthday-message-container">
         <div class="birthday-message">
           <div class="message-line">Ooi Shristy,</div>
@@ -849,7 +843,6 @@
         </div>
       </section>
 
-      <!-- Special Wishes -->
       <section class="special-wishes">
         <h2 class="wishes-title">A Few Real Wishes, Just for You</h2>
         <div class="wish-list">
@@ -886,7 +879,6 @@
         </div>
       </section>
 
-      <!-- Memory Cards -->
       <section class="memory-cards">
         <div class="memory-card">
           <div class="card-icon"><i class="fas fa-star"></i></div>
@@ -919,7 +911,6 @@
         </div>
       </section>
 
-      <!-- Birthday Celebration -->
       <section class="birthday-celebration">
         <h2 class="celebration-title">Today, Just Be You</h2>
         <div class="celebration-container">
@@ -943,7 +934,6 @@
         </div>
       </section>
 
-      <!-- Final Message -->
       <section class="birthday-message-container">
         <div class="birthday-message">
           <div class="message-line">
@@ -986,18 +976,26 @@
     </div>
 
     <script>
-      // Check if it's the birthday
+      // 1. IMPROVED DATE LOGIC:
+      // Checks if month is Jan (0) AND date is >= 24, OR if month is > Jan (Feb onwards)
       const today = new Date();
-      const isBirthday = today.getDate() === 24 && today.getMonth() === 0;
+      const isUnlocked =
+        (today.getMonth() === 0 && today.getDate() >= 24) ||
+        today.getMonth() > 0;
 
-      if (!isBirthday) {
-        // Show lock screen and hide main content
-        document.getElementById("birthdayLockScreen").style.display = "flex";
-        document.getElementById("mainContent").style.display = "none";
-        document.querySelector(".back-btn-container").style.display = "none";
-        document
-          .querySelectorAll(".floating-element")
-          .forEach((el) => (el.style.display = "none"));
+      // Select DOM elements
+      const lockScreen = document.getElementById("birthdayLockScreen");
+      const mainContent = document.getElementById("mainContent");
+      const backBtn = document.querySelector(".back-btn-container");
+      const floatingElements = document.querySelectorAll(".floating-element");
+
+      if (!isUnlocked) {
+        // --- LOCKED STATE ---
+        // Explicitly show lock screen and hide content
+        lockScreen.style.display = "flex";
+        mainContent.style.display = "none";
+        backBtn.style.display = "none";
+        floatingElements.forEach((el) => (el.style.display = "none"));
 
         // Set up countdown timer
         function updateCountdown() {
@@ -1037,9 +1035,14 @@
 
         // Stop script execution for locked state
         throw new Error("Birthday message locked until January 24th");
+      } else {
+        // --- UNLOCKED / SUCCESS STATE (THE FIX) ---
+        // Explicitly HIDE the lock screen so the user can see the message
+        lockScreen.style.display = "none";
+        mainContent.style.display = "block";
       }
 
-      // If it IS the birthday, continue with normal page functionality
+      // If unlocked, continue with normal page functionality
 
       // Her name
       const friendName = "Shristy";
@@ -1148,10 +1151,8 @@
         });
       });
 
-      // Check if it's her birthday
-      const isBirthdayToday = today.getDate() === 24 && today.getMonth() === 0;
-
-      if (isBirthdayToday) {
+      // Celebration effect (confetti/background pulse)
+      if (isUnlocked) {
         setTimeout(() => {
           const celebration = document.createElement("div");
           celebration.style.position = "fixed";
@@ -1194,4 +1195,3 @@
     </script>
   </body>
 </html>
-
